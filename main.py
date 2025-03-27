@@ -41,7 +41,7 @@ def main():
                 sys.exit()
             for bullet in shots:
                 if bullet.is_collision(item):
-                    item.kill()
+                    item.split()
                     bullet.kill()
         for item in drawable:
             item.draw(screen)
