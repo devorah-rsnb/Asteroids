@@ -38,9 +38,7 @@ def main():
     while True:
 
         # Get all input, but handle it in player.update()
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                return
+        for _ in pg.event.get(): pass
         pg.Surface.fill(screen, (0, 0, 0))
 
         # Logic and Player input for upcoming frame
