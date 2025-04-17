@@ -12,10 +12,10 @@ class Asteroid(CircleShape):
         self.kill() # Remove self from asteroids, updatable and drawable groups
         if self.radius <= ASTEROID_MIN_RADIUS:
             return 
-        else:
-            angle = random.uniform(SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE)
-            velocity1 = self.velocity.rotate(angle) * 1.2
-            velocity2 = self.velocity.rotate(-angle) * 1.2
-            new_r = self.radius - ASTEROID_MIN_RADIUS
-            Asteroid(self.position.x, self.position.y, new_r, velocity1)
-            Asteroid(self.position.x, self.position.y, new_r, velocity2)
+
+        angle = random.uniform(SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE)
+        velocity1 = self.velocity.rotate(angle) * 1.2
+        velocity2 = self.velocity.rotate(-angle) * 1.2
+        new_r = self.radius - ASTEROID_MIN_RADIUS
+        Asteroid(self.position.x, self.position.y, new_r, velocity1)
+        Asteroid(self.position.x, self.position.y, new_r, velocity2)
