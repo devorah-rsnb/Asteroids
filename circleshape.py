@@ -10,8 +10,8 @@ class CircleShape(pg.sprite.Sprite):
             super().__init__()
 
         self.position = pg.Vector2(x, y)
-        self.velocity = velocity
         self.radius = radius
+        self.velocity = velocity
 
     def draw(self, screen) -> None:
         # sub-classes must override
