@@ -3,7 +3,7 @@ import pygame as pg
 # Base class for game objects
 class CircleShape(pg.sprite.Sprite):
     def __init__(self, x, y, radius):
-        # we will be using this later
+        # Place reference of itself into container to be managed
         if hasattr(self, "containers"):
             super().__init__(self.containers)
         else:
@@ -24,7 +24,4 @@ class CircleShape(pg.sprite.Sprite):
     def is_collision(self, other):
         distance = self.position.distance_to(other.position)
         total_r = self.radius + other.radius
-        if distance <= total_r:
-            return True
-        else:
-            return False
+        return distance <= total_r
