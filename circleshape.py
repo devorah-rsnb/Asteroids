@@ -14,12 +14,11 @@ class CircleShape(pg.sprite.Sprite):
         self.velocity = velocity
 
     def draw(self, screen) -> None:
-        # sub-classes must override
-        pass
+        pg.draw.circle(screen, "white", self.position, self.radius, 2)
 
+    # Default frame action is Newton's 1st law
     def update(self, dt: int) -> None:
-        # sub-classes must override
-        pass
+        self.position += self.velocity * dt
 
     def is_collision(self, other) -> bool:
         distance = self.position.distance_to(other.position)
