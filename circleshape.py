@@ -2,7 +2,7 @@ import pygame as pg
 
 # Base class for game objects
 class CircleShape(pg.sprite.Sprite):
-    def __init__(self, x: int, y: int, radius: int):
+    def __init__(self, x: int, y: int, radius: int, velocity: pg.Vector2 = pg.Vector2(0,0)):
         # Place reference of itself into container to be managed
         if hasattr(self, "containers"):
             super().__init__(self.containers)
@@ -10,7 +10,7 @@ class CircleShape(pg.sprite.Sprite):
             super().__init__()
 
         self.position = pg.Vector2(x, y)
-        self.velocity = pg.Vector2(0, 0)
+        self.velocity = velocity
         self.radius = radius
 
     def draw(self, screen) -> None:
