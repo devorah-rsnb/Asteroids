@@ -39,7 +39,6 @@ def main():
 
         # Get all input, but handle it in player.update()
         for _ in pg.event.get(): pass
-        pg.Surface.fill(screen, (0, 0, 0))
 
         # Logic and Player input for upcoming frame
         updatable.update(dt)
@@ -55,6 +54,7 @@ def main():
                     bullet.kill()
         
         # View
+        pg.Surface.fill(screen, (0, 0, 0))
         for item in drawables:
             item.draw(screen)
         pg.display.flip()
