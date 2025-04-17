@@ -54,7 +54,7 @@ def main():
                     bullet.kill()
         
         # View
-        pg.Surface.fill(screen, (0, 0, 0))
+        pg.Surface.fill(screen, "black")
         for item in drawables:
             item.draw(screen)
         pg.display.flip()
