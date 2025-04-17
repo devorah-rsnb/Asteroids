@@ -12,10 +12,10 @@ class Player(CircleShape):
         self.direction = DIR_UP
 
     def triangle(self) -> list[pg.Vector2, pg.Vector2, pg.Vector2]:
-        right = DIR_UP.rotate(self.rotation + 90) * self.radius / 1.5
+        width = DIR_UP.rotate(self.rotation + 90) * self.radius / 1.5
         a = self.position + self.direction * self.radius
-        b = self.position - self.direction * self.radius - right
-        c = self.position - self.direction * self.radius + right
+        b = self.position - self.direction * self.radius - width
+        c = self.position - self.direction * self.radius + width
         return [a, b, c]
     
     def draw(self, screen) -> None:
