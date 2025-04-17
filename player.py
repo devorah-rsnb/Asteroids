@@ -9,13 +9,13 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        self.direction = DIR_UP
 
     def triangle(self) -> list[pg.Vector2, pg.Vector2, pg.Vector2]:
-        forward = DIR_UP.rotate(self.rotation)
         right = DIR_UP.rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
+        a = self.position + self.direction * self.radius
+        b = self.position - self.direction * self.radius - right
+        c = self.position - self.direction * self.radius + right
         return [a, b, c]
     
     def draw(self, screen) -> None:
@@ -23,10 +23,10 @@ class Player(CircleShape):
     
     def rotate(self, dt: int) -> None:
         self.rotation += PLAYER_TURN_SPEED * dt
+        self.direction = DIR_UP.rotate(self.rotation)
     
     def move(self, dt: int) -> None:
-        forward = DIR_UP.rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        self.position += self.direction * PLAYER_SPEED * dt
     
     def update(self, dt: int) -> None:
         keys = pg.key.get_pressed()
@@ -46,6 +46,5 @@ class Player(CircleShape):
         
     def shoot(self) -> None:
         new_shot = Shot(self.position.x, self.position.y)
-        forward = DIR_UP.rotate(self.rotation)
-        new_shot.velocity = forward * PLAYER_SHOOT_SPEED
+        new_shot.velocity = self.direction * PLAYER_SHOOT_SPEED
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN
