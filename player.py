@@ -5,12 +5,12 @@ from constants import STROKE_WIDTH, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPE
 from shot import Shot
 
 class Player(CircleShape):
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
 
-    def triangle(self):
+    def triangle(self) -> list[pg.Vector2, pg.Vector2, pg.Vector2]:
         forward = pg.Vector2(0, 1).rotate(self.rotation)
         right = pg.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
         a = self.position + forward * self.radius
@@ -18,17 +18,17 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
     
-    def draw(self, screen):
+    def draw(self, screen) -> None:
          pg.draw.polygon(screen, "white", self.triangle(), STROKE_WIDTH)
     
-    def rotate(self, dt):
+    def rotate(self, dt: int) -> None:
         self.rotation += PLAYER_TURN_SPEED * dt
     
-    def move(self, dt):
+    def move(self, dt: int) -> None:
         forward = pg.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * PLAYER_SPEED * dt
     
-    def update(self, dt):
+    def update(self, dt: int) -> None:
         keys = pg.key.get_pressed()
         self.shoot_timer -= dt
 
@@ -44,7 +44,7 @@ class Player(CircleShape):
             if self.shoot_timer <= 0:
                 self.shoot()
         
-    def shoot(self):
+    def shoot(self) -> None:
         new_shot = Shot(self.position.x, self.position.y)
         forward = pg.Vector2(0, 1).rotate(self.rotation)
         new_shot.velocity = forward * PLAYER_SHOOT_SPEED
