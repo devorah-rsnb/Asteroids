@@ -1,5 +1,10 @@
+import pygame as pg
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+
+# Cardinal directions; easier to use if declared explicitly
+DIR_UP = pg.Vector2(0,1)
 
 # All objects are polygons, so their line width needs to be defined
 STROKE_WIDTH = 2 # mm?
