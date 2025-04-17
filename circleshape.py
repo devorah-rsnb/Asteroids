@@ -1,4 +1,5 @@
 import pygame as pg
+from constants import STROKE_WIDTH
 
 # Base class for game objects
 class CircleShape(pg.sprite.Sprite):
@@ -14,7 +15,7 @@ class CircleShape(pg.sprite.Sprite):
         self.velocity = velocity
 
     def draw(self, screen) -> None:
-        pg.draw.circle(screen, "white", self.position, self.radius, 2)
+        pg.draw.circle(screen, "white", self.position, self.radius, STROKE_WIDTH)
 
     # Default frame action is Newton's 1st law
     def update(self, dt: int) -> None:
