@@ -20,14 +20,14 @@ def main():
 
     # Class accessible containers that allow objects to destruct themselves
     updatable = pg.sprite.Group()
-    drawable = pg.sprite.Group()  
+    drawables = pg.sprite.Group()  
     asteroids = pg.sprite.Group() 
     shots = pg.sprite.Group() 
 
-    Player.containers = (updatable, drawable)
-    Asteroid.containers = (asteroids, updatable, drawable)
+    Player.containers = (updatable, drawables)
+    Asteroid.containers = (asteroids, updatable, drawables)
     AsteroidField.containers = (updatable)
-    Shot.containers = (shots, updatable, drawable)
+    Shot.containers = (shots, updatable, drawables)
 
     # This object implicitly manages the asteroids as an 'updatable' object
     asteroid_field = AsteroidField()
@@ -57,7 +57,7 @@ def main():
                     bullet.kill()
         
         # View
-        for item in drawable:
+        for item in drawables:
             item.draw(screen)
         pg.display.flip()
 
