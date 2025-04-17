@@ -30,17 +30,12 @@ class Player(CircleShape):
         keys = pg.key.get_pressed()
         self.shoot_timer -= dt
 
-        if keys[pg.K_a]:
-            self.rotate(-dt)
-        if keys[pg.K_d]:
-            self.rotate(dt)
-        if keys[pg.K_w]:
-            self.move(dt)
-        if keys[pg.K_s]:
-            self.move(-dt)
-        if keys[pg.K_SPACE]:
-            if self.shoot_timer <= 0:
-                self.shoot()
+        if keys[pg.K_a]: self.rotate(-dt)
+        if keys[pg.K_d]: self.rotate(dt)
+        if keys[pg.K_w]: self.move(dt)
+        if keys[pg.K_s]: self.move(-dt)
+        if keys[pg.K_SPACE] and self.shoot_timer <= 0:
+            self.shoot()
         
     def shoot(self) -> None:
         Shot(self.position.x, self.position.y, self.direction * PLAYER_SHOOT_SPEED)
