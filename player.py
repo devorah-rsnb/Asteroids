@@ -43,6 +43,5 @@ class Player(CircleShape):
                 self.shoot()
         
     def shoot(self) -> None:
-        new_shot = Shot(self.position.x, self.position.y)
-        new_shot.velocity = self.direction * PLAYER_SHOOT_SPEED
+        Shot(self.position.x, self.position.y, self.direction * PLAYER_SHOOT_SPEED)
         self.shoot_timer = PLAYER_SHOOT_COOLDOWN
