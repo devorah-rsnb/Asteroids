@@ -8,7 +8,7 @@ from asteroidfield import AsteroidField
 from shot import Shot
 
 
-def main():
+def main() -> None:
     print("Starting Asteroids!")
     print(f"Screen size: {SCREEN_WIDTH} x {SCREEN_HEIGHT}")
 
