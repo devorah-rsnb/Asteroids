@@ -7,12 +7,11 @@ from shot import Shot
 class Player(CircleShape):
     def __init__(self, x: int, y: int):
         super().__init__(x, y, PLAYER_RADIUS)
-        self.rotation = 0
         self.shoot_timer = 0
         self.direction = DIR_UP
 
     def triangle(self) -> list[pg.Vector2, pg.Vector2, pg.Vector2]:
-        width = DIR_UP.rotate(self.rotation + 90) * self.radius / 1.5
+        width = self.direction.rotate(90) * self.radius / 1.5
         a = self.position + self.direction * self.radius
         b = self.position - self.direction * self.radius - width
         c = self.position - self.direction * self.radius + width
@@ -22,8 +21,7 @@ class Player(CircleShape):
          pg.draw.polygon(screen, "white", self.triangle(), STROKE_WIDTH)
     
     def rotate(self, dt: int) -> None:
-        self.rotation += PLAYER_TURN_SPEED * dt
-        self.direction = DIR_UP.rotate(self.rotation)
+        self.direction = self.direction.rotate(PLAYER_TURN_SPEED * dt)
     
     def move(self, dt: int) -> None:
         self.position += self.direction * PLAYER_SPEED * dt
