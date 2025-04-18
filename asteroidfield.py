@@ -34,7 +34,7 @@ class AsteroidField(pg.sprite.Sprite):
             self.spawn_timer = 0
 
         # spawn a new asteroid at a random edge
-        edge = choice(self.edges)
+        edge = choice(AsteroidField.edges)
         cardinal_velocity = edge["direction"] * randint(ASTEROID_MAX_SPEED, ASTEROID_MIN_SPEED)
         velocity = cardinal_velocity.rotate(randint(-SPLIT_DEFLECTION, SPLIT_DEFLECTION))
         position = edge["spawn_location"](uniform(0, 1))
