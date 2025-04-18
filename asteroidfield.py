@@ -30,10 +30,7 @@ class AsteroidField(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self, self.containers)
-        self.spawn_timer = 0
-
-    def spawn(self, radius: int, position: pg.Vector2, velocity: pg.Vector2) -> None:
-        Asteroid(position.x, position.y, radius, velocity)
+        self.spawn_timer = 0  
 
     def update(self, dt: int) -> None:
         self.spawn_timer += dt
@@ -47,4 +44,4 @@ class AsteroidField(pg.sprite.Sprite):
         velocity = velocity.rotate(randint(-30, 30))
         position = edge[1](uniform(0, 1))
         kind = randint(1, ASTEROID_KINDS)
-        self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
+        Asteroid(position.x, position.y, ASTEROID_MIN_RADIUS * kind, velocity)
