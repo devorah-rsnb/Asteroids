@@ -31,4 +31,4 @@ PLAYER_SPEED = 200 # px/s
 
 SHOT_RADIUS = 5 # px
 SHOOT_SPEED = 500 # px/s
-SHOOT_COOLDOWN = 0.3 # shots/s
+SHOOT_COOLDOWN = 0.3 # seconds
