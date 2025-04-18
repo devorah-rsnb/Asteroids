@@ -7,21 +7,21 @@ from constants import *
 class AsteroidField(pg.sprite.Sprite):
     edges = [
         [
-            pg.Vector2(1, 0),
+            DIR_RIGHT,
             lambda y: pg.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT),
         ],
         [
-            pg.Vector2(-1, 0),
+            DIR_LEFT,
             lambda y: pg.Vector2(
                 SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT
             ),
         ],
         [
-            pg.Vector2(0, 1),
+            DIR_UP,
             lambda x: pg.Vector2(x * SCREEN_WIDTH, -ASTEROID_MAX_RADIUS),
         ],
         [
-            pg.Vector2(0, -1),
+            DIR_DOWN,
             lambda x: pg.Vector2(
                 x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
             ),

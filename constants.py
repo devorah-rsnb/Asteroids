@@ -5,6 +5,9 @@ SCREEN_HEIGHT = 720
 
 # Cardinal directions; easier to use if declared explicitly
 DIR_UP = pg.Vector2(0,1)
+DIR_DOWN = pg.Vector2(0,-1)
+DIR_RIGHT = pg.Vector2(1,0)
+DIR_LEFT = pg.Vector2(-1,0)
 
 # All objects are polygons, so their line width needs to be defined
 STROKE_WIDTH = 2 # mm?
