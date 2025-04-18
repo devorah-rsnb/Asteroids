@@ -5,6 +5,8 @@ import pygame as pg
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 SCREEN_BEZEL = -10
+FONT_SIZE = 32
+LINE_SPACING = 1.5
 
 HIGH_SCORE_PATH = "high_scores.json"
 

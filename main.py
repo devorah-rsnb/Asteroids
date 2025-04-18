@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 import json
 
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BEZEL, HIGH_SCORE_PATH
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BEZEL, FONT_SIZE, LINE_SPACING, HIGH_SCORE_PATH
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -20,7 +20,7 @@ def draw_score(screen, font, score: int, high_scores: list[int]) -> None:
     high_score_surf = font.render(f"High Score: {high_scores[-1]}", True, "white")
     screen.blit(high_score_surf, screen.get_rect().inflate(SCREEN_BEZEL, SCREEN_BEZEL))
     score_surf = font.render(f"Score: {score}", True, "white")
-    screen.blit(score_surf, screen.get_rect().inflate(SCREEN_BEZEL, SCREEN_BEZEL - 32 * 1.5))
+    screen.blit(score_surf, screen.get_rect().inflate(SCREEN_BEZEL, SCREEN_BEZEL - FONT_SIZE * LINE_SPACING))
 
 def save_high_scores(high_scores: list[int], new_score: int) -> None:
     high_scores.append(new_score)
@@ -37,7 +37,7 @@ def main() -> None:
     pg.init()
     screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pg.time.Clock()
-    font = pg.font.SysFont(None, 32)
+    font = pg.font.SysFont(None, FONT_SIZE)
     dt = 0 # Seconds since last frame
     score = 0
 
