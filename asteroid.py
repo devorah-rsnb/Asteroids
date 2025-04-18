@@ -12,6 +12,7 @@ class Asteroid(CircleShape):
     def split(self) -> None:
         
         if self.radius <= ASTEROID_MIN_RADIUS:
+            self.kill() # Remove self from asteroids, updatable and drawable groups
             return 
 
         angle = uniform(SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE)
