@@ -18,7 +18,7 @@ class Asteroid(CircleShape):
         velocity1 = self.velocity.rotate(angle) * SPLIT_ACCELERATION
         velocity2 = self.velocity.rotate(-angle) * SPLIT_ACCELERATION
         new_r = self.radius - ASTEROID_MIN_RADIUS
-        Asteroid(self.position, new_r, velocity1)
-        Asteroid(self.position, new_r, velocity2)
+        Asteroid(self.position.copy(), new_r, velocity1)
+        Asteroid(self.position.copy(), new_r, velocity2)
 
         self.kill() # Remove self from asteroids, updatable and drawable groups
