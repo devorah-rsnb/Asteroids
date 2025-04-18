@@ -44,19 +44,19 @@ def main() -> None:
         updatable.update(dt)
 
         # Check for collisions
-        for item in asteroids:
-            if item.is_collision(player):
+        for asteroid in asteroids:
+            if asteroid.is_collision(player):
                 print("Game over!")
                 sys.exit()
-            for bullet in shots:
-                if bullet.is_collision(item):
-                    item.split()
-                    bullet.kill()
+            for shot in shots:
+                if shot.is_collision(asteroid):
+                    asteroid.split()
+                    shot.kill()
         
         # View
         pg.Surface.fill(screen, "black")
-        for item in drawables:
-            item.draw(screen)
+        for drawable in drawables:
+            drawable.draw(screen)
         pg.display.flip()
 
         # Seconds since last frame
