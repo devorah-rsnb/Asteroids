@@ -31,7 +31,9 @@ class AsteroidField(pg.sprite.Sprite):
     def update(self, dt: int) -> None:
         self.spawn_timer += dt
         if self.spawn_timer <= ASTEROID_SPAWN_RATE:
-            self.spawn_timer = 0
+            return
+        
+        self.spawn_timer = 0
 
         # spawn a new asteroid at a random edge
         edge = choice(AsteroidField.edges)
