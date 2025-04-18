@@ -10,7 +10,7 @@ class Asteroid(CircleShape):
         super().__init__(position, radius, velocity)
     
     def split(self) -> None:
-        self.kill() # Remove self from asteroids, updatable and drawable groups
+        
         if self.radius <= ASTEROID_MIN_RADIUS:
             return 
 
@@ -20,3 +20,5 @@ class Asteroid(CircleShape):
         new_r = self.radius - ASTEROID_MIN_RADIUS
         Asteroid(self.position, new_r, velocity1)
         Asteroid(self.position, new_r, velocity2)
+
+        self.kill() # Remove self from asteroids, updatable and drawable groups
