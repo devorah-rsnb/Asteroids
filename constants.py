@@ -30,6 +30,5 @@ PLAYER_TURN_SPEED = 300 # degrees/s
 PLAYER_SPEED = 200 # px/s
 
 SHOT_RADIUS = 5 # px
-PLAYER_SHOOT_SPEED = 500 # px/s
-PLAYER_SHOOT_COOLDOWN = 0.3 # shots/s
-
+SHOOT_SPEED = 500 # px/s
+SHOOT_COOLDOWN = 0.3 # shots/s
