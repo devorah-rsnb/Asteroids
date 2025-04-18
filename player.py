@@ -1,51 +1,44 @@
-import pygame
+import pygame as pg
 
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
+from constants import STROKE_WIDTH, DIR_UP, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, SHOT_SPEED, SHOOT_COOLDOWN
 from shot import Shot
 
-class Player(CircleShape):
-    def __init__(self, x, y):
-        super().__init__(x, y, PLAYER_RADIUS)
-        self.rotation = 0
-        self.shoot_timer = 0
 
-    def triangle(self):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
+class Player(CircleShape):
+    def __init__(self, x: int, y: int):
+        super().__init__(pg.Vector2(x,y), PLAYER_RADIUS)
+        self.shoot_timer = 0
+        self.direction = DIR_UP
+
+    def triangle(self) -> list[pg.Vector2, pg.Vector2, pg.Vector2]:
+        width = self.direction.rotate(90) * self.radius / 1.5
+        a = self.position + self.direction * self.radius
+        b = self.position - self.direction * self.radius - width
+        c = self.position - self.direction * self.radius + width
         return [a, b, c]
     
-    def draw(self, screen):
-         pygame.draw.polygon(screen, "white", self.triangle(), 2)
+    def draw(self, screen) -> None:
+         pg.draw.polygon(screen, "white", self.triangle(), STROKE_WIDTH)
     
-    def rotate(self, dt):
-        self.rotation += PLAYER_TURN_SPEED * dt
+    def rotate(self, dt: int) -> None:
+        self.direction = self.direction.rotate(PLAYER_TURN_SPEED * dt)
     
-    def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+    def move(self, dt: int) -> None:
+        self.position += self.direction * PLAYER_SPEED * dt
     
-    def update(self, dt):
-        keys = pygame.key.get_pressed()
+    def update(self, dt: int) -> None:
+        keys = pg.key.get_pressed()
         self.shoot_timer -= dt
 
-        if keys[pygame.K_a]:
-            self.rotate(-dt)
-        if keys[pygame.K_d]:
-            self.rotate(dt)
-        if keys[pygame.K_w]:
-            self.move(dt)
-        if keys[pygame.K_s]:
-            self.move(-dt)
-        if keys[pygame.K_SPACE]:
-            if self.shoot_timer <= 0:
-                self.shoot()
+        if keys[pg.K_a]: self.rotate(-dt)
+        if keys[pg.K_d]: self.rotate(dt)
+        if keys[pg.K_w]: self.move(dt)
+        if keys[pg.K_s]: self.move(-dt)
+        if keys[pg.K_SPACE] and self.shoot_timer <= 0:
+            self.shoot()
         
-    def shoot(self):
-        new_shot = Shot(self.position.x, self.position.y)
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        new_shot.velocity = forward * PLAYER_SHOOT_SPEED
-        self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+    def shoot(self) -> None:
+        # Python passes by reference by default, hence .copy()
+        Shot(self.position.copy(), self.direction * SHOT_SPEED)
+        self.shoot_timer = SHOOT_COOLDOWN

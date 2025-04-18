@@ -1,29 +1,25 @@
-import pygame
-import random
+import pygame as pg
+from random import uniform
 
 from circleshape import CircleShape
-from constants import ASTEROID_MIN_RADIUS, SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE
+from constants import ASTEROID_MIN_RADIUS, SPLIT_ACCELERATION, SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE
+
 
 class Asteroid(CircleShape):
-    def __init__(self, x, y, radius):
-        super().__init__(x, y, radius)
-
-    def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, 2)
-        
-    def update(self, dt):
-        self.position += self.velocity * dt
+    def __init__(self, position: pg.Vector2, radius: int, velocity: pg.Vector2):
+        super().__init__(position, radius, velocity)
     
-    def split(self):
-        self.kill()
+    def split(self) -> None:
+        
         if self.radius <= ASTEROID_MIN_RADIUS:
+            self.kill() # Remove self from asteroids, updatable and drawable groups
             return 
-        else:
-            angle = random.uniform(SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE)
-            velocity1 = self.velocity.rotate(angle)
-            velocity2 = self.velocity.rotate(-angle)
-            new_r = self.radius - ASTEROID_MIN_RADIUS
-            A1 = Asteroid(self.position.x, self.position.y, new_r)
-            A1.velocity = velocity1 * 1.2
-            A2 = Asteroid(self.position.x, self.position.y, new_r)
-            A2.velocity = velocity2 * 1.2
+
+        angle = uniform(SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE)
+        velocity1 = self.velocity.rotate(angle) * SPLIT_ACCELERATION
+        velocity2 = self.velocity.rotate(-angle) * SPLIT_ACCELERATION
+        new_r = self.radius - ASTEROID_MIN_RADIUS
+        Asteroid(self.position.copy(), new_r, velocity1)
+        Asteroid(self.position.copy(), new_r, velocity2)
+
+        self.kill() # Remove self from asteroids, updatable and drawable groups

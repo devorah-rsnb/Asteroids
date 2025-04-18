@@ -1,51 +1,95 @@
-import pygame
+import pygame as pg
 import sys
+import json
 
-from constants import *
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BEZEL, FONT_SIZE, LINE_SPACING, HIGH_SCORE_PATH
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
 
 
-def main():
+def load_high_scores() -> list[int]:
+    try:
+        with open(HIGH_SCORE_PATH, 'r') as score_file:
+            return json.load(score_file)
+    except FileNotFoundError:
+        return [0]
+
+def draw_score(screen, font, score: int, high_scores: list[int]) -> None:
+    high_score_surf = font.render(f"High Score: {high_scores[-1]}", True, "white")
+    screen.blit(high_score_surf, screen.get_rect().inflate(SCREEN_BEZEL, SCREEN_BEZEL))
+    score_surf = font.render(f"Score: {score}", True, "white")
+    screen.blit(score_surf, screen.get_rect().inflate(SCREEN_BEZEL, SCREEN_BEZEL - FONT_SIZE * LINE_SPACING))
+
+def save_high_scores(high_scores: list[int], new_score: int) -> None:
+    high_scores.append(new_score)
+    high_scores.sort()
+    with open(HIGH_SCORE_PATH, 'w') as score_file:
+        json.dump(high_scores, score_file)
+
+
+def main() -> None:
     print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
+    print(f"Screen size: {SCREEN_WIDTH} x {SCREEN_HEIGHT}")
 
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    clock = pygame.time.Clock()
-    dt = 0
+    # Initialize pygame, boilerplate
+    pg.init()
+    screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pg.time.Clock()
+    font = pg.font.SysFont(None, FONT_SIZE)
+    dt = 0 # Seconds since last frame
+    score = 0
 
-    updatable = pygame.sprite.Group()
-    drawable = pygame.sprite.Group()  
-    asteroids = pygame.sprite.Group() 
-    shots = pygame.sprite.Group() 
+    # Class accessible containers that allow objects to destruct themselves
+    updatable = pg.sprite.Group()
+    drawables = pg.sprite.Group()  
+    asteroids = pg.sprite.Group() 
+    shots = pg.sprite.Group() 
 
-    Player.containers = (updatable, drawable)
-    Asteroid.containers = (asteroids, updatable, drawable)
+    Player.containers = (updatable, drawables)
+    Asteroid.containers = (asteroids, updatable, drawables)
     AsteroidField.containers = (updatable)
-    Shot.containers = (shots, updatable, drawable)
+    Shot.containers = (shots, updatable, drawables)
+
+    # This object implicitly manages the asteroids as an 'updatable' object
     asteroid_field = AsteroidField()
+
+    # Player in center of window to start
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    high_scores = load_high_scores()
+
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+
+        # Get all input, but handle it in player.update()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
                 return
-        pygame.Surface.fill(screen, (0, 0, 0))
+
+        # Logic and Player input for upcoming frame
         updatable.update(dt)
-        for item in asteroids:
-            if item.is_collision(player):
+
+        # Check for collisions
+        for asteroid in asteroids:
+            if asteroid.is_collision(player):
                 print("Game over!")
+                save_high_scores(high_scores, score)
                 sys.exit()
-            for bullet in shots:
-                if bullet.is_collision(item):
-                    item.split()
-                    bullet.kill()
-        for item in drawable:
-            item.draw(screen)
-        pygame.display.flip()
+            for shot in shots:
+                if shot.is_collision(asteroid):
+                    score += 1
+                    asteroid.split()
+                    shot.kill()
+        
+        # View
+        screen.fill("black")
+        for drawable in drawables:
+            drawable.draw(screen)
+        draw_score(screen, font, score, high_scores)
+        pg.display.flip()
+
+        # Seconds since last frame
         dt = clock.tick(60) / 1000
 
 
