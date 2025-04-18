@@ -33,7 +33,7 @@ class AsteroidField(pg.sprite.Sprite):
         self.spawn_timer = 0
 
     def spawn(self, radius: int, position: pg.Vector2, velocity: pg.Vector2) -> None:
-        asteroid = Asteroid(position.x, position.y, radius, velocity)
+        Asteroid(position.x, position.y, radius, velocity)
 
     def update(self, dt: int) -> None:
         self.spawn_timer += dt
