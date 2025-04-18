@@ -1,7 +1,7 @@
 import pygame as pg
 
 from circleshape import CircleShape
-from constants import STROKE_WIDTH, DIR_UP, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, SHOOT_SPEED, SHOOT_COOLDOWN
+from constants import STROKE_WIDTH, DIR_UP, PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, SHOT_SPEED, SHOOT_COOLDOWN
 from shot import Shot
 
 
@@ -39,5 +39,5 @@ class Player(CircleShape):
             self.shoot()
         
     def shoot(self) -> None:
-        Shot(self.position.x, self.position.y, self.direction * SHOOT_SPEED)
+        Shot(self.position.x, self.position.y, self.direction * SHOT_SPEED)
         self.shoot_timer = SHOOT_COOLDOWN
