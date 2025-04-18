@@ -12,6 +12,8 @@ DIR_LEFT = pg.Vector2(-1,0)
 # All objects are polygons, so their line width needs to be defined
 STROKE_WIDTH = 2 # mm?
 
+ASTEROID_MAX_SPEED = 40 # px/s
+ASTEROID_MIN_SPEED = 100 # px/s
 ASTEROID_MIN_RADIUS = 20
 ASTEROID_KINDS = 3
 ASTEROID_SPAWN_RATE = 0.8  # seconds
