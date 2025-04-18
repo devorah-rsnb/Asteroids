@@ -7,7 +7,7 @@ from shot import Shot
 
 class Player(CircleShape):
     def __init__(self, x: int, y: int):
-        super().__init__(x, y, PLAYER_RADIUS)
+        super().__init__(pg.Vector2(x,y), PLAYER_RADIUS)
         self.shoot_timer = 0
         self.direction = DIR_UP
 
@@ -39,5 +39,6 @@ class Player(CircleShape):
             self.shoot()
         
     def shoot(self) -> None:
-        Shot(self.position.x, self.position.y, self.direction * SHOT_SPEED)
+        # Python passes by reference by default, hence .copy()
+        Shot(self.position.copy(), self.direction * SHOT_SPEED)
         self.shoot_timer = SHOOT_COOLDOWN

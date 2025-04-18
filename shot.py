@@ -5,5 +5,5 @@ from constants import SHOT_RADIUS
 
 
 class Shot(CircleShape):
-    def __init__(self, x: int, y: int, velocity: pg.Vector2):
-        super().__init__(x, y, SHOT_RADIUS, velocity)
+    def __init__(self, position: pg.Vector2, velocity: pg.Vector2):
+        super().__init__(position, SHOT_RADIUS, velocity)

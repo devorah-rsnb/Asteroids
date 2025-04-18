@@ -6,8 +6,8 @@ from constants import ASTEROID_MIN_RADIUS, SPLIT_ACCELERATION, SPLIT_MIN_ANGLE, 
 
 
 class Asteroid(CircleShape):
-    def __init__(self, x: int, y: int, radius: int, velocity: pg.Vector2):
-        super().__init__(x, y, radius, velocity)
+    def __init__(self, position: pg.Vector2, radius: int, velocity: pg.Vector2):
+        super().__init__(position, radius, velocity)
     
     def split(self) -> None:
         self.kill() # Remove self from asteroids, updatable and drawable groups
@@ -18,5 +18,5 @@ class Asteroid(CircleShape):
         velocity1 = self.velocity.rotate(angle) * SPLIT_ACCELERATION
         velocity2 = self.velocity.rotate(-angle) * SPLIT_ACCELERATION
         new_r = self.radius - ASTEROID_MIN_RADIUS
-        Asteroid(self.position.x, self.position.y, new_r, velocity1)
-        Asteroid(self.position.x, self.position.y, new_r, velocity2)
+        Asteroid(self.position, new_r, velocity1)
+        Asteroid(self.position, new_r, velocity2)

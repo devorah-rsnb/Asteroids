@@ -41,4 +41,4 @@ class AsteroidField(pg.sprite.Sprite):
         velocity = cardinal_velocity.rotate(randint(-SPAWN_DEFLECTION, SPAWN_DEFLECTION))
         position = edge["spawn_location"](uniform(0, 1))
         kind = randint(1, ASTEROID_KINDS)
-        Asteroid(position.x, position.y, ASTEROID_MIN_RADIUS * kind, velocity)
+        Asteroid(position, ASTEROID_MIN_RADIUS * kind, velocity)
