@@ -5,6 +5,8 @@ import pygame as pg
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
+HIGH_SCORE_PATH = "high_scores.json"
+
 # Cardinal directions; easier to use if declared explicitly
 DIR_UP = pg.Vector2(0,1)
 DIR_DOWN = pg.Vector2(0,-1)

@@ -1,11 +1,34 @@
 import pygame as pg
 import sys
+import json
 
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, HIGH_SCORE_PATH
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+
+
+def load_high_scores() -> list[int]:
+    try:
+        with open(HIGH_SCORE_PATH, 'r') as score_file:
+            return json.load(score_file)
+    except FileNotFoundError:
+        return [0]
+
+def draw_score(screen, font, score: int, high_scores: list[int]) -> None:
+    high_score_surf = font.render(f"High Score: {high_scores[-1]}", True, "white")
+    high_score_rect = screen.get_rect().inflate(-10, -10)
+    screen.blit(high_score_surf, high_score_surf.get_rect(topleft = high_score_rect.topleft))
+    score_surf = font.render(f"Score: {score}", True, "white")
+    score_rect = screen.get_rect().inflate(-10, -10 - 32 - 16)
+    screen.blit(score_surf, score_surf.get_rect(topleft = score_rect.topleft))
+
+def save_high_scores(high_scores: list[int], new_score: int) -> None:
+    high_scores.append(new_score)
+    high_scores.sort()
+    with open(HIGH_SCORE_PATH, 'w') as score_file:
+        json.dump(high_scores, score_file)
 
 
 def main() -> None:
@@ -16,7 +39,9 @@ def main() -> None:
     pg.init()
     screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pg.time.Clock()
+    font = pg.font.SysFont(None, 32)
     dt = 0 # Seconds since last frame
+    score = 0
 
     # Class accessible containers that allow objects to destruct themselves
     updatable = pg.sprite.Group()
@@ -35,6 +60,8 @@ def main() -> None:
     # Player in center of window to start
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+    high_scores = load_high_scores()
+
     while True:
 
         # Get all input, but handle it in player.update()
@@ -49,16 +76,19 @@ def main() -> None:
         for asteroid in asteroids:
             if asteroid.is_collision(player):
                 print("Game over!")
+                save_high_scores(high_scores, score)
                 sys.exit()
             for shot in shots:
                 if shot.is_collision(asteroid):
+                    score += 1
                     asteroid.split()
                     shot.kill()
         
         # View
-        pg.Surface.fill(screen, "black")
+        screen.fill("black")
         for drawable in drawables:
             drawable.draw(screen)
+        draw_score(screen, font, score, high_scores)
         pg.display.flip()
 
         # Seconds since last frame
