@@ -30,13 +30,12 @@ class AsteroidField(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self, self.containers)
-        self.spawn_timer = 0.0
+        self.spawn_timer = 0
 
-    def spawn(self, radius, position, velocity):
-        asteroid = Asteroid(position.x, position.y, radius)
-        asteroid.velocity = velocity
+    def spawn(self, radius: int, position: pg.Vector2, velocity: pg.Vector2) -> None:
+        asteroid = Asteroid(position.x, position.y, radius, velocity)
 
-    def update(self, dt):
+    def update(self, dt: int) -> None:
         self.spawn_timer += dt
         if self.spawn_timer <= ASTEROID_SPAWN_RATE:
             self.spawn_timer = 0
