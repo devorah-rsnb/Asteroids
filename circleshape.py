@@ -1,6 +1,7 @@
 import pygame as pg
 from constants import STROKE_WIDTH
 
+
 # Base class for game objects
 class CircleShape(pg.sprite.Sprite):
     def __init__(self, x: int, y: int, radius: int, velocity: pg.Vector2 = pg.Vector2(0,0)):

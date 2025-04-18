@@ -4,6 +4,7 @@ from random import uniform
 from circleshape import CircleShape
 from constants import ASTEROID_MIN_RADIUS, SPLIT_ACCELERATION, SPLIT_MIN_ANGLE, SPLIT_MAX_ANGLE
 
+
 class Asteroid(CircleShape):
     def __init__(self, x: int, y: int, radius: int, velocity: pg.Vector2):
         super().__init__(x, y, radius, velocity)
