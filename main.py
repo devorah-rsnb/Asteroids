@@ -38,7 +38,9 @@ def main() -> None:
     while True:
 
         # Get all input, but handle it in player.update()
-        for _ in pg.event.get(): pass
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                return
 
         # Logic and Player input for upcoming frame
         updatable.update(dt)
