@@ -4,6 +4,7 @@ import pygame as pg
 # Pixels
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+SCREEN_BEZEL = -10
 
 HIGH_SCORE_PATH = "high_scores.json"
 
