@@ -18,11 +18,9 @@ def load_high_scores() -> list[int]:
 
 def draw_score(screen, font, score: int, high_scores: list[int]) -> None:
     high_score_surf = font.render(f"High Score: {high_scores[-1]}", True, "white")
-    high_score_rect = screen.get_rect().inflate(-10, -10)
-    screen.blit(high_score_surf, high_score_surf.get_rect(topleft = high_score_rect.topleft))
+    screen.blit(high_score_surf, screen.get_rect().inflate(-10, -10))
     score_surf = font.render(f"Score: {score}", True, "white")
-    score_rect = screen.get_rect().inflate(-10, -10 - 32 - 16)
-    screen.blit(score_surf, score_surf.get_rect(topleft = score_rect.topleft))
+    screen.blit(score_surf, screen.get_rect().inflate(-10, -10 - 32 - 16))
 
 def save_high_scores(high_scores: list[int], new_score: int) -> None:
     high_scores.append(new_score)
